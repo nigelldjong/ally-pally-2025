@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ally Pally 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #1a3d2f;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            width: 100%;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin: 0;
+        }
+
+        .header .underline {
+            width: 80px;
+            height: 5px;
+            background-color: #d4af37;
+            margin: 10px auto 20px;
+        }
+
+        .standings {
+            width: 95%;
+            max-width: 500px;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: center;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            border-bottom: 1px solid #dddddd;
+        }
+
+        table th {
+            background-color: #1a3d2f;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        table td:nth-child(1) {
+            text-align: left;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #d4f1e0;
+        }
+
+        .highlight {
+            background-color: #d4af37 !important;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d4af37;
+            border: none;
+            border-radius: 5px;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c49b32;
+        }
+
+        button:active {
+            background-color: #b5892e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ally Pally 2025</h1>
+            <div class="underline"></div>
+        </div>
+        <div class="standings">
+            <table>
+                <thead id="tableHeaders">
+                    <!-- Dynamically Generated Headers -->
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Dynamically Generated Rows -->
+                </tbody>
+            </table>
+        </div>
+        <button id="shareStandings" onclick="copyStandings()">Deel stand</button>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=mrFwyO83EjSfjnp_OALTHpSx_dGNOP4zqRbI9Te4GY2fw56b-YxWG4dsakIhh4a9FEOlnUIHIg6EE12ueAkIY2iouWqbLuSBm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKmXI1rDAwjOhNxcCrP7DgfingkwRcL6MKE6s3aSKTboGLnFsrSanNOEiNcp-pumXmNnt0HN1ye5iluPylEQr6im6IpN_NKO9A&lib=MDVrVfu2pY2y4wVx84WFK4WHmfsi26sC-');
+                const data = await response.json();
+
+                const maxRounds = Math.max(...data.standings.map(player => player.rounds.length));
+
+                const tableHeaders = document.getElementById('tableHeaders');
+                tableHeaders.innerHTML = '';
+                let headerRow = `<tr><th>Speler</th>`;
+                for (let i = 1; i <= maxRounds; i++) {
+                    headerRow += `<th>R${i}</th>`;
+                }
+                headerRow += `<th>Totaal</th></tr>`;
+                tableHeaders.innerHTML = headerRow;
+
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = '';
+
+                data.standings.forEach((player, index) => {
+                    const row = document.createElement('tr');
+                    if (index === 0) {
+                        row.classList.add('highlight');
+                    }
+
+                    let roundsHtml = '';
+                    for (let i = 0; i < maxRounds; i++) {
+                        roundsHtml += `<td>${player.rounds[i] || 0}</td>`;
+                    }
+
+                    row.innerHTML = `
+                        <td>${player.player}</td>
+                        ${roundsHtml}
+                        <td>${player.total}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+
+                window.standingsData = data.standings;
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function copyStandings() {
+            if (!window.standingsData) return;
+
+            const standingsText = '*🎯 WK Darts Stand 🎯*\n' +
+                window.standingsData
+                    .map((player, index) => `${index + 1}. ${player.player} - ${player.total}`)
+                    .join('\n');
+
+            navigator.clipboard.writeText(standingsText).then(() => {
+                const button = document.getElementById('shareStandings');
+                button.textContent = 'Gekopieerd naar klembord';
+                setTimeout(() => {
+                    button.textContent = 'Deel stand';
+                }, 2000);
+            }).catch(err => console.error('Error copying standings:', err));
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
