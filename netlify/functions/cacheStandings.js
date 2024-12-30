@@ -1,9 +1,9 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 let cachedData = null;
 let cacheExpiry = 0;
 
-exports.handler = async () => {
+export async function handler() {
     const currentTime = Date.now();
 
     // Check if cached data is still valid
@@ -46,4 +46,4 @@ exports.handler = async () => {
             }),
         };
     }
-};
+}
