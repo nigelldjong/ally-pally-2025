@@ -7,108 +7,115 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background-color: #1a3d2f;
-            color: #ffffff;
-        }
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #1a3d2f;
+    color: #ffffff;
+}
 
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .header {
-            text-align: center;
-            width: 100%;
-        }
+.header {
+    text-align: center;
+    width: 100%;
+}
 
-        .header h1 {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            margin: 0;
-        }
+.header h1 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin: 0;
+}
 
-        .header .underline {
-            width: 80px;
-            height: 5px;
-            background-color: #d4af37;
-            margin: 10px auto 20px;
-        }
+.header .underline {
+    width: 80px;
+    height: 5px;
+    background-color: #d4af37;
+    margin: 10px auto 20px;
+}
 
-        .standings {
-            width: 95%;
-            max-width: 500px;
-            background-color: #ffffff;
-            color: #1a1a1a;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+.standings {
+    width: 95%;
+    max-width: 500px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 10px;
+    padding: 10px 15px; /* Adjusted padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* Removed top margin */
+}
 
-        table th,
-        table td {
-            padding: 10px;
-            text-align: center;
-            font-size: clamp(0.8rem, 2vw, 1rem);
-            border-bottom: 1px solid #dddddd;
-        }
+table th,
+table td {
+    padding: 10px;
+    text-align: center;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    border-bottom: 1px solid #dddddd;
+}
 
-        table th {
-            background-color: #1a3d2f;
-            color: #ffffff;
-            font-weight: bold;
-        }
+table th {
+    background-color: #1a3d2f;
+    color: #ffffff;
+    font-weight: bold;
+}
 
-        table td:nth-child(1) {
-            text-align: left;
-        }
+table td:nth-child(1) {
+    text-align: left;
+}
 
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-        table tr:hover {
-            background-color: #d4f1e0;
-        }
+table tr:hover {
+    background-color: #d4f1e0;
+}
 
-        .highlight {
-            background-color: #d4af37 !important;
-            color: #1a1a1a;
-            font-weight: bold;
-        }
+table,
+thead,
+tbody {
+    margin: 0; /* Reset margins */
+    padding: 0; /* Reset padding */
+}
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #d4af37;
-            border: none;
-            border-radius: 5px;
-            color: #1a1a1a;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.highlight {
+    background-color: #d4af37 !important;
+    color: #1a1a1a;
+    font-weight: bold;
+}
 
-        button:hover {
-            background-color: #c49b32;
-        }
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #d4af37;
+    border: none;
+    border-radius: 5px;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        button:active {
-            background-color: #b5892e;
-        }
+button:hover {
+    background-color: #c49b32;
+}
+
+button:active {
+    background-color: #b5892e;
+}
     </style>
 </head>
 <body>
