@@ -1,10 +1,28 @@
-export async function handler(event, context) {
+const fetch = require('node-fetch');
+
+let cachedData = null; // Variable to store cached data
+let cacheExpiry = 0;   // Timestamp for when the cache expires
+
+exports.handler = async () => {
+    const currentTime = Date.now();
+
+    // Check if cached data is available and still valid
+    if (cachedData && currentTime < cacheExpiry) {
+        return {
+            statusCode: 200,
+            body: JSON.stringify(cachedData),
+        };
+    }
+
+    // If no valid cache, fetch fresh data
     try {
-        // Fetch the standings data
-        const response = await fetch('https://script.google.com/macros/s/AKfycbznbDUO_G5buCPueuah3vQViqdOfjXqHhOyOdQZDFiTPgKm0MOEzOBpGe1i8yCukdxI/exec');
+        const response = await fetch('https://script.googleusercontent.com/macros/...'); // Original API URL
         const data = await response.json();
 
-        // Return the data as JSON
+        // Update the cache
+        cachedData = data;
+        cacheExpiry = currentTime + 10 * 60 * 1000; // Cache valid for 10 minutes
+
         return {
             statusCode: 200,
             body: JSON.stringify(data),
@@ -12,10 +30,9 @@ export async function handler(event, context) {
     } catch (error) {
         console.error('Error fetching standings:', error);
 
-        // Return an error response
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Failed to fetch standings data' }),
+            body: JSON.stringify({ error: 'Failed to fetch standings' }),
         };
     }
-}
+};
