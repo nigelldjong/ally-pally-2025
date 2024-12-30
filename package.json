@@ -1,9 +1,9 @@
 {
-  "name": "ally-pally-2025",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
-  "dependencies": {
-    "node-fetch": "^3.0.0"
-  }
+    "name": "allypally2025",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "dependencies": {
+        "node-fetch": "^3.3.2"
+    }
 }
