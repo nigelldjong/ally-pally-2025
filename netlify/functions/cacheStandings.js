@@ -4,7 +4,7 @@ let cachedData = null; // To store cached data in memory
 let lastFetchedTime = 0; // To store the last fetch timestamp
 
 const CACHE_DURATION = 10 * 60 * 1000; // Default: 10 minutes in milliseconds
-const API_URL = "https://script.google.com/macros/s/AKfycbznbDUO_G5buCPueuah3vQViqdOfjXqHhOyOdQZDFiTPgKm0MOEzOBpGe1i8yCukdxI/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyTfkCvBU2RDCI9n778ZO_tV7ODf5jANCKcWoiyZw_T6ba_cv53JrAReEDVLr8mM4g8/exec";
 
 export async function handler() {
   try {
