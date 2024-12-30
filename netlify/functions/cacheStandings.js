@@ -1,39 +1,23 @@
-const fetch = require("node-fetch");
+import fetch from 'node-fetch';
 
-let cachedData = null;
-let lastFetchTime = 0;
-
-const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
-
-exports.handler = async () => {
-  const currentTime = Date.now();
-
-  if (!cachedData || currentTime - lastFetchTime > CACHE_DURATION) {
+export async function handler(event, context) {
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbznbDUO_G5buCPueuah3vQViqdOfjXqHhOyOdQZDFiTPgKm0MOEzOBpGe1i8yCukdxI/exec"
-      );
+        // Fetch the standings data
+        const response = await fetch('https://script.google.com/macros/s/AKfycbznbDUO_G5buCPueuah3vQViqdOfjXqHhOyOdQZDFiTPgKm0MOEzOBpGe1i8yCukdxI/exec');
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      cachedData = await response.json();
-      lastFetchTime = currentTime;
+        // Return the data as JSON
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data),
+        };
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: `Error fetching data: ${error.message}`,
-      };
-    }
-  }
+        console.error('Error fetching standings:', error);
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(cachedData),
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": `max-age=${CACHE_DURATION / 1000}`,
-    },
-  };
-};
+        // Return an error response
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Failed to fetch standings data' }),
+        };
+    }
+}
