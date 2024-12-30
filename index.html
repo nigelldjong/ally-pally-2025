@@ -152,8 +152,17 @@
 
                 data.standings.forEach((player, index) => {
                     const row = document.createElement('tr');
+                    let playerName = player.player;
+
+                    // Check if the tournament is over (points in the last round)
+                    const isTournamentOver = player.rounds.length === maxRounds && player.rounds[maxRounds - 1] > 0;
+
                     if (index === 0) {
                         row.classList.add('highlight');
+                        // Add trophy for the top player if the tournament is over
+                        if (isTournamentOver) {
+                            playerName += ' 🏆';
+                        }
                     }
 
                     let roundsHtml = '';
@@ -162,7 +171,7 @@
                     }
 
                     row.innerHTML = `
-                        <td>${player.player}</td>
+                        <td>${playerName}</td>
                         ${roundsHtml}
                         <td>${player.total}</td>
                     `;
