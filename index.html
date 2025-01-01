@@ -89,13 +89,8 @@
             font-weight: bold;
         }
 
-        .button-container {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px; /* Space between buttons */
-        }
-
         button {
+            margin-top: 20px;
             padding: 10px 20px;
             background-color: #d4af37;
             border: none;
@@ -105,8 +100,6 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            flex: 1; /* Buttons grow equally in space */
-            max-width: 200px; /* Limit button size */
         }
 
         button:hover {
@@ -115,16 +108,6 @@
 
         button:active {
             background-color: #b5892e;
-        }
-
-        @media (max-width: 600px) {
-            .button-container {
-                flex-direction: column;
-            }
-
-            button {
-                max-width: 100%; /* Full width on smaller screens */
-            }
         }
     </style>
 </head>
@@ -144,16 +127,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="button-container">
-            <button id="shareStandings" onclick="copyStandings()">Deel stand</button>
-            <button id="refreshStandings" onclick="fetchData()">Vernieuwen</button>
-        </div>
+        <button id="shareStandings" onclick="copyStandings()">Deel stand</button>
     </div>
 
     <script>
         async function fetchData() {
             try {
-                const response = await fetch('https://allypally2025.netlify.app/.netlify/functions/cacheStandings'); // Updated API URL
+                // Added ?v=1.0.2 for cache busting
+                const response = await fetch('https://allypally2025.netlify.app/.netlify/functions/cacheStandings?v=1.0.2'); 
                 const data = await response.json();
 
                 // Determine the max rounds and dynamically set round names
